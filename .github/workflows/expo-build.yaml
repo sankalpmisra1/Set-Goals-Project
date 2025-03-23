@@ -25,8 +25,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Build Expo App (Web)
-        run: npx expo export:web
+      - name: Build Expo App
+        run: npx expo export
 
       - name: Upload Web Build as Artifact
         uses: actions/upload-artifact@v4
