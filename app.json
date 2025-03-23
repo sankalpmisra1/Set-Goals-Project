@@ -25,6 +25,7 @@
         "backgroundColor": "#FFFFFF"
       }
     },
+    "sdkVersion": "49.0.0",
     "web": {
       "favicon": "./assets/favicon.png"
     },
