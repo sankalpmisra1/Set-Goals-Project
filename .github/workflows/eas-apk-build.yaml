@@ -1,0 +1,38 @@
+name: Build Android APK using EAS
+
+on:
+  workflow_dispatch:  # Manual trigger from GitHub UI
+
+jobs:
+  eas-build-apk:
+    name: EAS Android Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Authenticate with Expo
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: eas whoami || eas login --token $EXPO_TOKEN
+
+      - name: Start Android Build (APK)
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: eas build --platform android --profile preview --non-interactive
+
+      - name: Upload Build URL as Artifact (optional)
+        if: success()
+        run: echo "Build finished. You can download the APK from the Expo dashboard."
